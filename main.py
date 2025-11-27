@@ -1,5 +1,5 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler
-from telegram import Message
+from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes
+from telegram import Message, Update
 import requests
 import json
 
@@ -13,15 +13,14 @@ webAppUrl = "https://script.google.com/macros/s/AKfycbwv05rchOoFj1eHhQx93HUd_mxK
 def setWebhookUrl():
     webhookUrl = telegramUrl+"/setWebhook?url="+webAppUrl
     print(webhookUrl)
-"""
-def main():
-    updater = Updater(bot_token)
-    dp = updater.dispatcher
-    dp.add_handler(CommandHandler("Oi", apresentacao))
-    updater.start_polling()
-    updater.idle()
 
-if __name__== '__main__':
-    main()
-"""
-setWebhookUrl()
+# Configurando start
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text('Olá! Eu sou seu bot de finanças. Use /ajuda para ver os comandos disponíveis.')
+
+start_handler = CommandHandler('start', start)
+
+def main():
+    application = Application.builder().token(bot_token).build()
+    application.add_handler(start_handler)
+
