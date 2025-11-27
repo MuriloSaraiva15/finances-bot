@@ -16,11 +16,12 @@ def setWebhookUrl():
 
 # Configurando start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Olá! Eu sou seu bot de finanças. Use /ajuda para ver os comandos disponíveis.')
 
-start_handler = CommandHandler('start', start)
+    await update.message.reply_text("Está funcionando?")
 
-def main():
+
+if __name__ == '__main__':
     application = Application.builder().token(bot_token).build()
-    application.add_handler(start_handler)
+    application.add_handler(CommandHandler("start", start))
+    application.run_polling()    
 
